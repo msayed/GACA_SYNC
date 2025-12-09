@@ -11,7 +11,7 @@ namespace GACASYNC
 {
     public interface IGacaSyncService
     {
-        void RunOnce(CancellationToken cancellationToken = default);
+        Task RunOnceAsync(CancellationToken cancellationToken = default);
         void SendEmail(string error);
     }
 
@@ -40,7 +40,7 @@ namespace GACASYNC
             _configuration = configuration;
         }
 
-        public void RunOnce(CancellationToken cancellationToken = default)
+        public Task RunOnceAsync(CancellationToken cancellationToken = default)
         {
             DateTime fromDate = DateTime.Today.AddDays(-1);
             DateTime toDate = DateTime.Today.AddDays(2);
@@ -82,6 +82,8 @@ namespace GACASYNC
 
             for (int i = 0; i < aimsCount; i++)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 try
                 {
                     DataRow row = importDataTable.Rows[i];
@@ -320,6 +322,8 @@ namespace GACASYNC
             {
                 _repository.BulkUpdateGaca(updates);
             }
+
+            return Task.CompletedTask;
         }
 
         private bool IsDomestic(string from, string to)
