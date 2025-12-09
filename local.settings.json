@@ -1,0 +1,43 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "WorkerSettings:IntervalMinutes": "30",
+    "SmtpSettings:Host": "smtp.example.com",
+    "SmtpSettings:Port": "25",
+    "SmtpSettings:From": "no-reply@example.com",
+    "SmtpSettings:To": "dev-team@example.com",
+    "ConnectionStrings:GacaCS": "Server=tcp:server,1433;Database=gaca;User Id=user;Password=secret;",
+    "ConnectionStrings:AimsConnection": "Server=tcp:server,1433;Database=aims;User Id=user;Password=secret;",
+    "ConnectionStrings:GenevaCS": "Server=tcp:server,1433;Database=geneva;User Id=user;Password=secret;"
+  },
+  "Serilog": {
+    "Using": [
+      "Serilog.Sinks.Console",
+      "Serilog.Sinks.File"
+    ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "System": "Warning"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Console"
+      },
+      {
+        "Name": "File",
+        "Args": {
+          "path": "logs/log-.txt",
+          "rollingInterval": "Day",
+          "retainedFileCountLimit": 7,
+          "shared": true,
+          "outputTemplate": "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff} {Level:u3}] {Message:lj}{NewLine}{Exception}"
+        }
+      }
+    ]
+  }
+}
