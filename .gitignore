@@ -1,0 +1,10 @@
+bin
+obj
+.idea
+**.Development.json
+.vs
+**sln.DotSettings**
+**.Local.**
+logs
+Files
+.vscode
